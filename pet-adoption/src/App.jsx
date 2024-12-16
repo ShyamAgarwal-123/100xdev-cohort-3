@@ -5,7 +5,14 @@ import Form from './components/Form'
 import AdoptionTable from './components/adoptionTable'
 
 function App() {
-  const [adoptionTable, setAdoptionTable] = useState([])
+  const [adoptionTable, setAdoptionTable] = useState([{
+        petName: "Pet Name",
+        petType: "Pet Type",
+        breed: "Breed",
+        adopterName: "Adopter Name",
+        email: "Email",
+        phone: "Phone"
+  }])
   const [goBack , setGoBack] = useState(true);
 
   return (
@@ -19,14 +26,11 @@ function App() {
       alignItems: 'center',
     }}>
       <Header/>
-      {/* <Form setGoBack={setGoBack} setAdoptionTable={setAdoptionTable}/> */}
-      <AdoptionTable setGoBack={setGoBack} setAdoptionTable={setAdoptionTable}/>
+      {goBack === true ? <Form setGoBack={setGoBack} setAdoptionTable={setAdoptionTable}/>:
+      <AdoptionTable adoptionTable={adoptionTable} setGoBack={setGoBack} />}    
     </div>
   )
 }
-
-
-
 
 
 

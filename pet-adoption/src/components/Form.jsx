@@ -1,5 +1,5 @@
-import { use, useRef, useState } from "react"
-
+import {useRef} from "react"
+import validator from "../utility/validation.js";
 
 export default function Form({setGoBack, setAdoptionTable}){
     const formRef = useRef({
@@ -12,13 +12,14 @@ export default function Form({setGoBack, setAdoptionTable}){
     })
     const handelChange = function(event){
         const {name, value} = event.target;
+
         formRef[name] = value
     }
 
     const submitForm = function(event){  
-        event.preventDefault()      
-        setAdoptionTable((prevData)=>[...prevData,formRef])
-        setGoBack((goBack)=>!goBack)        
+        event.preventDefault()
+        console.log(event);
+        setGoBack((goBack)=>!goBack)       
     }
     
 
