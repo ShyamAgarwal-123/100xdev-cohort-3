@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react"
 import PostComponent from "./components/Post.jsx"
 import NotificationComponent from "./components/NotificationCom.jsx"
+import CounterComponent  from "./components/couterComponent.jsx"
 
 function App() {
 
   const [post, setPost] = useState([])
   
 
+  useEffect(()=>{
+    console.log("side-effect");
+    return ()=>{
+      console.log("return");
+    }
+  },[post])
 
   const addPost= function(){
     setPost([...post,    {
@@ -20,6 +27,13 @@ function App() {
   const postComponents = post.map((post)=>{
     return<PostComponent title={post.title} subTitle1={post.subTitle1} subTitle2={post.subTitle2} discription={post.discription}/>
   })
+
+  const main = ()=>{
+    console.log("main");
+    
+  }
+
+  main()
 
 
   return (
@@ -38,14 +52,13 @@ function App() {
         top:0,
         left: 0
       }}>Add Post</button>
+      {console.log('main-return')}
       <div>
 {/* {[        <PostComponent title={"Shyam Agarwal"} subTitle1={"20M follower"} subTitle2={"20min aga"} discription={"my name is Shyam Agarwal"}/>,<br/>,
         <PostComponent title={"Rishav Agarwal"} subTitle1={"Promted"} discription={"I am very Happy to anoumce that i have been promoted"}/>]} */}
-
-        
-        <NotificationComponent/>
+        {/* <NotificationComponent/> */}
         {postComponents}
-
+        <CounterComponent />
       </div>
     </div>
   )
