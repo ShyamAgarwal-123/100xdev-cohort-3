@@ -1,46 +1,133 @@
-import { useEffect, useState } from 'react'
-import './App.css'
+import { useEffect, useState,useRef } from "react";
+import "./App.css";
 
-function App() {
-  const [time, setTime] = useState(0)
-  const [isRunning, setIsRunning] = useState(true)
-  const [editField, setEditField] = useState(null)
-
+export default function App() {
   return (
-    <>
-      <TimerComponent/>
-    </>
-  )
+    <div>
+      <TimerComponent />
+    </div>
+  );
 }
 
+const TimerComponent = () => {
+  const [time, setTime] = useState(0);
+  const [running, setRunning] = useState(false);
+  const [editable, setEditable] = useState({ edit: true });
+  const clockRef = useRef()
 
-function TimerComponent({isRunning}){
-  return <div className='timer-component'>
-    {isRunning? <TimeComponent/>:<FieldsComponent/>}
-    <ButtonComponent />
-  </div>  
-}
+  const editingFieldHndler = (e) => { 
+    const {name, value} = e.target
+    let { edit : _ , ...newEditable} = editable
+    if (editable[name]) setEditable(newEditable);
+    const number = value?.padStart(2, "0");
 
-function FieldsComponent({handelEditField}) {
-  return <div className='fields-component'>
-    <input name="hr" type="number" maxLength={2} onChange={handelEditField} />
-    <input name="min" type="number" onClick={handelEditField}/>
-    <input name="sec" type="number" onClick={handelEditField}/>
-  </div>
-}
 
-function ButtonComponent({isRunning,handelRunningState}){
-  return <div>
-    <button className='start-pause' onClick={handelRunningState}>{isRunning ? "Pause":"Start"}</button>
-    <button className='reset'>Reset</button>
-  </div>
-}
+    const newTime = {
+      ...editable
+    };
 
-function TimeComponent(){
-  return <div>
-    <span className='hr'>1</span>
-    <span className='min'>34</span>
-    <span className='sec'>3</span>
-  </div>
-}
-export default App
+    newTime[name] = number
+
+    setEditable({...newTime})
+    
+
+    const calculatedTime = calculateTime(newTime.hr, newTime.min, newTime.sec);
+
+    setTime(calculatedTime);
+  };
+
+  const calculateTime = (hour, minute, seconds) => {
+    let hr = hour;
+    let min = minute;
+    let sec = seconds;
+
+    if (!hr) hr = 0;
+    if (!min) min = 0;
+    if (!sec) sec = 0;
+    return parseInt(hr) * 3600 + parseInt(min) * 60 + parseInt(sec);
+  };
+
+  const changeEditable = ()=>{
+    let { edit : _ , ...newEditable} = editable
+    setRunning(!running)
+    running ? setEditable({...newEditable , edit : true}): setEditable({...newEditable, edit : false})
+  }
+
+  const reset = ()=>{
+
+    if(editable.hr && editable.min && editable.sec){
+
+    const calculatedTime = calculateTime(editable.hr, editable.min, editable.sec);
+
+    setTime(calculatedTime);
+    }else{
+      setTime(0)
+    }
+  }
+
+  useEffect(()=>{
+    if (running) {
+      // console.log(running);
+      
+      clockRef.current = setInterval(()=>{
+        setTime(time => time-1)
+      },1000)
+      
+    }
+    return ()=>{
+      clockRef.current && clearInterval(clockRef.current)
+    }
+  },[running])
+
+  const hour = Math.floor(time / 3600);
+  const minute = Math.floor((time - hour * 3600) / 60);
+  const second = time - hour * 3600 - minute * 60;
+
+  // console.log(time);
+  // console.log(editable);
+  
+  
+  return (
+    <div>
+      {editable.edit ? (
+        <div>
+          <input
+            type="text"
+            name={"hr"}
+            onChange={editingFieldHndler}
+            maxLength={2}
+            placeholder ={hour}
+          />
+          <input
+            type="text"
+            name={"min"}
+            onChange={editingFieldHndler}
+            maxLength={2}
+            placeholder={minute}
+          />
+          <input
+            type="text"
+            name={"sec"}
+            onChange={editingFieldHndler}
+            
+            maxLength={2}
+            placeholder={second}
+          />
+        </div>
+      ) : (
+        <div>
+          <span>{hour}</span>
+          <br />
+          <span>{minute}</span>
+          <br />
+          <span>{second}</span>
+        </div>
+      )}
+ 
+      {running ? <button onClick={changeEditable}>Pause</button>:<button onClick={changeEditable}>Start</button>}
+      <button onClick={reset}>Reset</button>
+    </div>
+  );
+};
+
+//Build a simple timer app with start, pause, reset, and editable time functionality.

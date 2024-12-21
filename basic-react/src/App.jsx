@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import PostComponent from "./components/Post.jsx"
 import NotificationComponent from "./components/NotificationCom.jsx"
 import CounterComponent  from "./components/couterComponent.jsx"
@@ -6,16 +6,34 @@ import CounterComponent  from "./components/couterComponent.jsx"
 function App() {
 
   const [post, setPost] = useState([])
+  const [number, setNumber] = useState(0)
+  const inputRef = useRef(null)
+  const chatBoxRef = useRef(null)
   
 
   useEffect(()=>{
-    console.log("side-effect");
+    console.log("side-effect", number);
     return ()=>{
-      console.log("return");
+      console.log("return", number);
     }
-  },[post])
+  },[number])
+
+  useEffect(()=>{
+    chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight
+},[post])
+
 
   const addPost= function(){
+
+    // console.log(useRef);
+    // console.log(inputRef);
+    
+
+    // inputRef.current.focus()
+
+    // setNumber(number+1)
+
+
     setPost([...post,    {
       title: "Shyam Agarwal",
       subTitle1: "20M follower",
@@ -46,6 +64,8 @@ function App() {
 
     }}>
 
+      {/* <input ref={inputRef}  type="text" placeholder="focus here" /> */}
+
       <button onClick={addPost} style={{
         position: "absolute",
         zIndex:1,
@@ -57,11 +77,19 @@ function App() {
 {/* {[        <PostComponent title={"Shyam Agarwal"} subTitle1={"20M follower"} subTitle2={"20min aga"} discription={"my name is Shyam Agarwal"}/>,<br/>,
         <PostComponent title={"Rishav Agarwal"} subTitle1={"Promted"} discription={"I am very Happy to anoumce that i have been promoted"}/>]} */}
         {/* <NotificationComponent/> */}
-        {postComponents}
-        <CounterComponent />
+        
+        {/* {number} */}
+        {/* <CounterComponent /> */}
       </div>
+      <div ref={chatBoxRef}
+            style={{ height: "200px", overflowY: "scroll", border: "1px solid black" }}>
+            {postComponents}
+            </div>
     </div>
   )
 }
+
+
+
 
 export default App
