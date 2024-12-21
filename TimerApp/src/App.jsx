@@ -12,13 +12,13 @@ export default function App() {
 const TimerComponent = () => {
   const [time, setTime] = useState(0);
   const [running, setRunning] = useState(false);
-  const [editable, setEditable] = useState({ edit: true });
+  const [editable, setEditable] = useState({ hr:'00',min:'00',sec:'00',edit: true });
   const clockRef = useRef()
 
   const editingFieldHndler = (e) => { 
     const {name, value} = e.target
-    let { edit : _ , ...newEditable} = editable
-    if (editable[name]) setEditable(newEditable);
+    // let { edit : _ , ...newEditable} = editable
+    // if (editable[name]) setEditable(newEditable);
     const number = value?.padStart(2, "0");
 
 
@@ -56,6 +56,8 @@ const TimerComponent = () => {
   const reset = ()=>{
 
     if(editable.hr && editable.min && editable.sec){
+      
+      
 
     const calculatedTime = calculateTime(editable.hr, editable.min, editable.sec);
 
@@ -84,7 +86,7 @@ const TimerComponent = () => {
   const second = time - hour * 3600 - minute * 60;
 
   // console.log(time);
-  // console.log(editable);
+  console.log(editable);
   
   
   return (
