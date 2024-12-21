@@ -66,7 +66,7 @@ const TimerComponent = () => {
   }
 
   useEffect(()=>{
-    if (running) {
+    if (running && time !== 0) {
       // console.log(running);
       
       clockRef.current = setInterval(()=>{
@@ -77,7 +77,7 @@ const TimerComponent = () => {
     return ()=>{
       clockRef.current && clearInterval(clockRef.current)
     }
-  },[running])
+  },[running,time])
 
   const hour = Math.floor(time / 3600);
   const minute = Math.floor((time - hour * 3600) / 60);
