@@ -76,14 +76,23 @@ const TimerComponent = () => {
       },1000)
       
     }
+    else{(()=>{
+
+      setRunning(false)
+      setEditable((editable)=>{
+        editable.edit = true
+        return editable
+      })
+    })()}
+    
     return ()=>{
       clockRef.current && clearInterval(clockRef.current)
     }
   },[running,time])
 
-  const hour = Math.floor(time / 3600);
-  const minute = Math.floor((time - hour * 3600) / 60);
-  const second = time - hour * 3600 - minute * 60;
+  const hour = `${Math.floor(time / 3600)}`.padStart(2,'0');
+  const minute = `${Math.floor((time - hour * 3600) / 60)}`.padStart(2,'0');
+  const second = `${time - hour * 3600 - minute * 60}`.padStart(2,'0');
 
   // console.log(time);
   console.log(editable);
