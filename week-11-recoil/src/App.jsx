@@ -1,50 +1,34 @@
-import { RecoilRoot ,  useRecoilValue, useSetRecoilState } from 'recoil'
+import { RecoilRoot ,  useRecoilState,  useRecoilValue, useSetRecoilState } from 'recoil'
 import './App.css'
-import { counterAtom } from './store/atoms/countAtom'
+import { jobsCountAtom, messageCountAtom, myNetworkCountAtom, notificationCountAtom, totalNotificationSelector } from './store/atoms/atom'
 
 
 
 function App() {
-  return (
-    <RecoilRoot>
-      <Counter/>
-    </RecoilRoot>
-  )
+  return <RecoilRoot>
+    <HeaderComponent/>
+  </RecoilRoot> 
 }
-const Counter = ()=>{
+
+
+const HeaderComponent =() =>{
+  const myNetworkCount = useRecoilValue(myNetworkCountAtom)
+  const jobsCount = useRecoilValue(jobsCountAtom)
+  const messageCount = useRecoilValue(messageCountAtom)
+  const notificationCount = useRecoilValue(notificationCountAtom)
+  const me = useRecoilValue(totalNotificationSelector)
+
+
 
   return <div>
-    <CurrentCount />
-    <Increase />
-    <Decrease />
-  </div>
+  <button>Home</button>
+  <button>My Network({myNetworkCount})</button>
+  <button>Jobs({jobsCount})</button>
+  <button>Messaging ({messageCount})</button>
+  <button>Notifications ({notificationCount})</button>
+  <button>Me({me})</button>
+</div>
 }
 
-const CurrentCount = ()=>{
-
-  const count = useRecoilValue(counterAtom)
-  return <div>
-    {count}
-  </div>
-}
-
-const Decrease = ()=>{
-  const setCount = useSetRecoilState(counterAtom)
-  return <div>
-    <button onClick={()=> setCount((c)=> c-1)}>
-      Decrease
-    </button>
-  </div>
-}
-
-const Increase = ()=>{
-  const setCount = useSetRecoilState(counterAtom)
-
-  return <div>
-    <button onClick={()=> setCount((c)=> c+1)}>
-      Increase
-    </button>
-  </div>
-}
 
 export default App
