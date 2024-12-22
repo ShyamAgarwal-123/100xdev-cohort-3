@@ -3,17 +3,24 @@ import { atom, selector } from "recoil"
 
 export const messageCountAtom = atom({
     key: 'messageCountAtom',
-    default : 0
+    default : selector({
+        key: 'messageCountSelector',
+        get: async ({get})=>{
+            await new Promise(r => setTimeout(r,5000))
+            return 2
+        }
+
+    })
 })
 
 export const notificationCountAtom = atom({
     key: 'notificationCountAtom',
-    default: 12
+    default: 0
 })
 
 export const jobsCountAtom = atom({
     key: 'jobsCountAtom',
-    default: 9
+    default: 0
 }) 
 
 export const myNetworkCountAtom = atom({
