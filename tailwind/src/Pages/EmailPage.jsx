@@ -7,7 +7,7 @@ import ButtonComponent from '../components/ButtonComponent';
 
 
 function EmailPage() {
-  const {disable, setDisable, handelOnChange} = useDisable();
+  const {disable, setDisable, handelOnChangeDisable} = useDisable();
 
 
   return (
@@ -16,7 +16,7 @@ function EmailPage() {
       <InfoComponent tandc={false}>
         Let's get Started
       </InfoComponent>
-      <InputComponent handelOnChange={handelOnChange} variants={{
+      <InputComponent handelOnChangeDisable={handelOnChangeDisable} variants={{
         placeholder: 'Email Id'
       }}/>
      <ButtonComponent disable={disable} >Continue</ButtonComponent>

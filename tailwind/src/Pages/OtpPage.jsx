@@ -2,12 +2,11 @@ import { useRef, useState } from "react"
 
 import InfoComponent from '../components/InfoComponent';
 import useDisable from '../customHooks/useDisable';
-
 import ButtonComponent from '../components/ButtonComponent';
 
 
 const OtpPage = ({n})=>{
-    const {disable, setDisable, handelOnChange} = useDisable();
+    const {disable, setDisable, handelOnChangeDisable} = useDisable();
     const arrRef = useRef(Array(10).fill('').map((x,index)=>x+index))
     const valRef = useRef(Array(n).fill(''))
     const [otp, setOtp] = useState(Array(n).fill(''))
@@ -28,7 +27,7 @@ const OtpPage = ({n})=>{
         index !==0 && valRef.current[index-1].focus()
     }
 
-    const InputComponents = Array(n).fill(0).map((x,index)=> <Input arrRef={arrRef} key={index} index={index+0} refrence={(e)=> valRef.current[index]= e} nextBox={nextBox} goBack={goBack} otp={otp}  setOtp={setOtp}/> )
+    const InputComponents = Array(n).fill(0).map((x,index)=> <Input arrRef={arrRef} key={index} index={index+0} refrence={(e)=> valRef.current[index]= e} nextBox={nextBox} goBack={goBack} otp={otp} setOtp={setOtp} handelOnChangeDisable={handelOnChangeDisable}/> )
 
     
 
@@ -45,7 +44,7 @@ const OtpPage = ({n})=>{
         </div>
 }
 
-function Input({arrRef,refrence,nextBox,goBack,index,otp}){
+function Input({arrRef,refrence,nextBox,goBack,index,otp,handelOnChangeDisable}){
 
     
     const handelOnChange = (e)=>{
@@ -61,12 +60,14 @@ function Input({arrRef,refrence,nextBox,goBack,index,otp}){
             goBack(index)
         }
 
+        handelOnChangeDisable(e,otp)
+
         
     }
     const val = otp[index]? otp[index]: ''
     
     
-    return<input type="text" value={val} maxLength={1} ref={refrence} onKeyUp={handelOnChange} onChange={handelOnChange} className="h-11 w-8 rounded-lg pl-3 align-middle"/>
+    return<input type="text" value={val} maxLength={1} ref={refrence} onKeyUp={handelOnChange} onChange={handelOnChange} className="bg-[#173f6a] text-white h-11 w-8 rounded-lg pl-3 align-middle outline-none"/>
 }
 
 export default OtpPage
