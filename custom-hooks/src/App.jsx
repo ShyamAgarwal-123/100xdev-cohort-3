@@ -1,10 +1,10 @@
 import "./App.css";
 import useDebounce from "./hooks/useDebounce.js";
-import { useFetch } from "./hooks/useFetch.js";
+import { useFetch2 } from "./hooks/useFetch2.js";
 
 
 function App() {
-
+  const {state, error, loading} = useFetch2('#',10)
   const sendBackendSearchRequest = ()=>{
     console.log("request send to backend");
     
