@@ -1,19 +1,29 @@
+import { BrowserRouter, Routes, Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
+import "./App.css";
 
-import { Outlet } from 'react-router-dom'
-import './App.css'
-import Header from './components/Header/Header.jsx'
-import Footer from './components/Footer/Footer.jsx'
+import Layout from "./Layout.jsx";
+import Home from "./components/Home/Home.jsx";
+import About from "./components/About/About.jsx";
+import Contact from "./components/Contact/Contact.jsx";
+import User from "./components/User/User.jsx";
+import Github, { githubInfoLoader } from "./components/Github/Github.jsx";
+
+const router  = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path='/' element={<Layout />}>
+      <Route index element={<Home />} />
+      <Route path="about" element={<About />} />
+      <Route path="contact" element={<Contact />} />
+      <Route path="user/:userid/:id?" element={<User />} />
+      <Route path="github" element={<Github />} loader={githubInfoLoader} />
+    </Route>
+  )
+)
 
 function App() {
-  
-
   return (
-    <>
-    <Header/>
-    <Outlet/>
-    <Footer/>
-    </>
-  )
+    <RouterProvider router={router}/>
+  );
 }
 
-export default App
+export default App;

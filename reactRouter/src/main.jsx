@@ -1,4 +1,4 @@
-import React from 'react'
+import {StrictMode} from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
@@ -31,24 +31,24 @@ import Github, { githubInfoLoader } from './components/Github/Github.jsx'
 //   }
 // ])
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path='/' element={<App />}>
-      <Route path='' element={<Home />} />
-      <Route path='about' element={<About />} />
-      <Route path='contact' element={<Contact />} />
-      <Route path='user/:userid' element={<User />} />
-      <Route 
-      loader={githubInfoLoader}
-      path='github' 
-      element={<Github />}
-       />
-    </Route>
-  )
-)
+// const router = createBrowserRouter(
+//   createRoutesFromElements(
+//     <Route path='/' element={<App />}>
+//       <Route index element={<Home />} />
+//       <Route path='about' element={<About />} />
+//       <Route path='contact' element={<Contact />} />
+//       <Route path='user/:userid/:id?' element={<User />} />
+//       <Route 
+//       loader={githubInfoLoader}
+//       path='github' 
+//       element={<Github />}
+//        />
+//     </Route>
+//   )
+// )
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>,
+  <StrictMode>
+    <App/>
+  </StrictMode>,
 )
