@@ -9,7 +9,6 @@ function App() {
   // actual change in theme
 
   useEffect(() => {
-    console.log(isDarkmode);
     if (isDarkmode) document.querySelector("html").classList.add("dark");
     else document.querySelector("html").classList.remove("dark");
   }, [isDarkmode]);
