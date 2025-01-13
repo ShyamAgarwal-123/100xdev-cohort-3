@@ -1,17 +1,12 @@
-import './App.css'
-import DobPage from './Pages/DobPage'
-import EmailPage from './Pages/EmailPage'
-import OtpPage from './Pages/OtpPage'
+import "./App.css";
+import { Outlet } from "react-router-dom";
 
-
-function App(){
-  
+function App() {
   return (
     <div>
-      <OtpPage n={6}/>
+      <Outlet />
     </div>
-  )
+  );
 }
 
-
-export default App
+export default App;
